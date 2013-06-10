@@ -9,5 +9,14 @@
             <input id="yourname" name="yourname" type="text" /> 
             <input name="submit" type="submit" value="Send" /> 
         </form>
+        
+        <?php
+    if(isset($_POST['submit'])) 
+    { 
+        echo 'Hello ' . $_POST['yourname']; 
+    }
+        ?>
+        
     </body> 
 </html>
+

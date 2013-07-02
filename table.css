@@ -175,7 +175,7 @@ text-align:left;
 
 .hide-thisyear, .hide-t-pick, .hide-nash, .hide-stats,
 .hide-sambowie, .hide-cousy, .hide-first, .hide-nineties,
-.hide-almostlast, .hide-shooters
+.hide-almostlast, .hide-shooters, .hide-roundtwo
 {
 display:none;
 }
@@ -188,4 +188,21 @@ vertical-align:middle;
 color:#3D3D3D;
 width:29px;
 }
+
+.legend-rd1
+{
+font-size:13px;
+font-weight:bold;
+background-color:#FADADA;
+text-align:center;
+}
+
+.legend-rd2
+{
+font-size:13px;
+font-weight:bold;
+background-color:#DBF3FF;
+text-align:center;
+}
+
 

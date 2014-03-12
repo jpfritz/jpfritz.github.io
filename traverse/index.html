@@ -1,0 +1,319 @@
+<!--
+TODO
+  make it so it uses n-1 paths
+  check other people using PCs
+  auto-zoom
+  
+-->
+<!--
+
+Add a column called 'identifier' to your Google spreadsheet. Every unique identifier will be a separate leg of the trip
+On geojson.io, add a column called 'order.' Mark the first leg as 1 and count up from there.
+You can paste my routes.json file into geojson.io to see what it looks like/how it's ordered
+
+It orders the slides by their start date and groups them by their identifiers.
+Then on the first set of slides it maps route 1, then for the next set of slides it maps route with the order 2, etc
+
+Read timeline-map.js for things you can change
+
+You can find my published spreadsheet at https://docs.google.com/spreadsheet/pub?key=0AjAPaAU9MeLFdHZ2Z3VjS2ZKUlYyUHh1VElIYUVidUE&output=html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Timeline JS Example</title>
+    <meta charset="utf-8">
+    <meta name="description" content="TimelineJS example">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <style type="text/css">
+
+    /* Color of the water */
+    .water {
+      fill: none;
+    }
+
+    /* Style for the countries, opacity is what makes it see-through */
+    .land {
+       fill: #EEE;
+       stroke: #000; /* Color of the country outlines */
+       stroke-width: 0.2px;
+       stroke-opacity: 0.6; /* Opacity of the color outlines */
+       fill-opacity: 0.25;
+     }
+         
+    /* Default style for the route */
+    /* Use display:none in here to make the future route disappear */
+    .route-outline {
+      fill: none;
+      stroke: #fff88f;
+      stroke-width: 2px;
+      stroke-opacity: 0.5;
+    }
+    
+    .route {
+      fill: none;
+      stroke: none;
+    }
+    /* Style for the completed parts of the route */
+    .route.active {
+      stroke: #fff440;
+      stroke-width: 4px;
+	  stroke-opacity: 1;
+    }
+    
+    #timeline-map-holder {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 1000;
+      pointer-events:none; /* Not allowed to click the map */
+    }
+    
+    .media-image.media-shadow {
+      position: static  !important;
+      margin: 0  !important;
+      padding: 0 !important;
+    }
+    
+    .magic-media-image img {
+      max-width: 100%;
+    }
+    
+    .vco-slider .slider-item {
+      overflow-x: hidden !important;
+      overflow-y: hidden !important;
+    }
+    
+    .vco-slider .slider-item .content .content-container .text .container h2.date,
+    .nav-container .date {
+      display: none !important;
+    }
+    
+    .layout-text-media .container,
+    .layout-media .container {
+      z-index: 1000;
+      width: 20% !important;
+      background: rgba(0,0,0,0.25);
+      color: #ffffff;
+      position: absolute;
+      top: 5%;
+      left: 0;
+      padding: 15px !important;
+    }
+    
+    .vco-storyjs .text h1, .vco-storyjs .text h2, .vco-storyjs .text h3, 
+    .vco-storyjs .text h4, .vco-storyjs .text h5, .vco-storyjs .text h6 {
+      color: #ffffff !important;
+    }
+    
+    .layout-text-media .container h2.date {
+      display: none;
+    }
+    
+    .layout-text-media .container h3,
+    .layout-text-media .container p,
+    .layout-text-media .container h2 {
+      color: #FFFFFF !important;
+    }
+    
+    /* 
+      I don't know why the slider isn't starting on the far left hand side 
+    */
+    
+    .vco-feature .vco-slider .slider-container-mask .slider-container {
+      left: 0;
+    }
+    
+    /* 
+      
+      Get rid of these two if you really want fit-to-width with letterboxing 
+      As well as 
+        style='background-image: url(" + m.id + ")'
+      in timeline-min.js
+      
+    */
+    
+    .magic-media-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .magic-media-image img {
+      display: none;
+    }
+    
+    /* iframe magic */
+
+    .chapter-frame {
+      position: absolute;
+      top: 0;
+      left: 100px;
+      left: 0px;
+    }
+    
+    /* map toggle */
+    
+    #map-toggle {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      z-index: 1000;
+      background: #272727;
+      font-size: 0.6em;
+      font-family: Arial;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 3px 5px;
+      cursor: pointer;
+      border: solid #FFFFFF 0.25px;
+      color: #FFFFFF;
+      opacity: 0.6;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+    
+    /* Hide text under chevrons */
+    
+    .vco-slider .nav-next .title,
+    .vco-slider .nav-previous .title {
+      display: none !important;
+    }
+    
+    /* Remove this if you aren't starting on an iframe */
+    #timeline-map-holder {
+/*      display: none;
+*/    }
+    
+    /* Youtube Video fix */
+    .vco-slider .slider-item .content .content-container .media .media-wrapper .media-container .media-frame.youtube {
+      position: relative;
+      left: 75px;
+      left: 0px;
+    }
+    
+    /* Move chevrons etc above everything else */
+    .vco-slider .nav-previous, .vco-slider .nav-next {
+      z-index: 3000;
+    }
+    </style>
+    
+    
+    <style>
+      html, body {
+       height:100%;
+       padding: 0px;
+       margin: 0px;
+      }
+    </style>
+    <!-- HTML5 shim, for IE6-8 support of HTML elements--><!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    
+  </head>
+  <body>
+
+    <!-- BEGIN Timeline Embed -->
+    <div id="timeline-embed"></div>
+    <div id="timeline-map-holder">
+      <svg id="timeline-map"></svg>
+    </div>
+    
+      <script type="text/javascript">
+        var timeline_config = {
+         width: "100%",
+         height: "100%",
+         source: 'https://docs.google.com/spreadsheet/pub?key=0AjAPaAU9MeLFdHZ2Z3VjS2ZKUlYyUHh1VElIYUVidUE&output=html'
+        }
+      </script>
+      <script type="text/javascript" src="compiled/js/storyjs-embed.js"></script>
+      <!-- END Timeline Embed-->
+      <script src="timeline-watcher.js"></script>
+
+      <!-- 
+        Edit timeline-map.js to set where the map points, how zoomed in it is, etc 
+      -->
+      <script src="timeline-map.js"></script>
+
+        <script type="text/javascript">
+          $(document).ready( function() {
+              watcher = new TimelineWatcher.Watcher("#timeline-embed");
+              mapper = new TimelineWatcher.Mapper({ 
+                timeline_id: "#timeline-embed", 
+                map_id: "#map" 
+              });
+          });
+          
+          /*
+            This is what it uses to fade in and fade out
+            400 is how long it takes to fade in and fade out
+            200 is the pause after you start changing slides before it starts to fade in or out
+          */
+          
+          $("#timeline-embed").on("VIEWED", ".slider-item", function(e, data) {
+            // If it hasn't loaded the content yet just ignore it and keep the default
+            if( $(this).html() === "" ) return;
+            
+            if($(this).find("iframe")[0]) {
+              setTimeout( function() {
+                $("#timeline-map-holder").fadeOut(400);
+              }, 200);
+            } else {
+              setTimeout( function() {
+                $("#timeline-map-holder").fadeIn(400);
+              }, 200);
+            }
+          });
+          
+          $(window).bind('resizeEnd', function() {
+            $(".chapter-frame").attr('height', $(window).height())
+                        .attr('width', $(window).width());
+            $(".youtube").attr('height', $(window).height())
+                        .attr('width', $(window).width());
+            
+          });
+          
+        </script>
+
+        <!-- a whole block of stuff to make the left/right nav work by only clicking the arrows -->
+        <style>
+          .nav-next {
+            pointer-events:none;
+          }
+          
+          .nav-next .icon {
+            pointer-events:all;
+          }
+          
+          .nav-previous {
+            pointer-events:none;
+          }
+          .nav-previous .icon {
+            pointer-events: all;
+          }
+          
+          .vco-notouch .vco-slider .nav-next:hover .icon {
+            margin-left: 61px !important;
+          }
+
+          .vco-notouch .vco-slider .nav-previous:hover .icon {
+            margin-left: 12px !important;
+          }
+        </style>
+  </body>
+</html>

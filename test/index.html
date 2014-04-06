@@ -17,7 +17,7 @@
 		
     <script type="text/javascript"
         src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		
+
     <script type="text/javascript">
 	
 		function initialize() {
@@ -111,41 +111,24 @@
 				  
 			var firstLayer = new google.maps.FusionTablesLayer({
 				query: 	{
-					select: 'KML2',
-					from: '1l6t6YZQsZhacc4hdw1nTrOhh99afOMmv5aMQqCPn'
+					select: 'kml_4326',
+					from: '1Tw6AiwneMrSjdDvv7pgNh5bFB-dtumwPxxWsvbWA'
 				},
-				styles: [{
-					polygonOptions: {
-						fillOpacity: 0.3}
-					}, {
-					where: 'BilanzStatus = 0',
-					polygonOptions: {
-						fillColor: "#990000"}
-					}, {
-					where: 'BilanzStatus = 1',
-					polygonOptions: {
-						fillColor: "#000066"}
-					}, {
-					where: 'BilanzStatus = 2',
-					polygonOptions: {
-						fillColor: "#009900"}
-					}, {
-					where: 'BilanzStatus = 3',
-					polygonOptions: {
-						fillColor: "#FFFFFF",
-						fillOpacity: 0.7}
-				}],
+				options: {
+					styleId: 3,
+					templateId: 4
+				},
 				map: map
 			});
   
 			var secondLayer = new google.maps.FusionTablesLayer({
 				query: 	{
 				select: 'longitude_latitude',
-				from: '1lf3GpGBsDpGfByEb2ZXIaOrY_MjVRjRGNHAI2hEJ'
+				from: '1WukvEi1lbr-5Eo0Xn-Vqi5OKS7jhvt1aPmDdOD8I'
 				},
 				options: {
 					styleId: 2,
-					templateId: 2
+					templateId: 3
 				},
 				map: map
 			});

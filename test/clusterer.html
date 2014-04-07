@@ -3,7 +3,7 @@
   <head>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
-    <title>DFB-Spiele</title>
+    <title>clusterer</title>
     <style>
       html, body, #map-canvas {
         height: 100%;
@@ -128,17 +128,70 @@
 				map: map
 			});
   
-			var secondLayer = new google.maps.FusionTablesLayer({
-				query: 	{
-				select: 'longitude_latitude',
-				from: '1WukvEi1lbr-5Eo0Xn-Vqi5OKS7jhvt1aPmDdOD8I'
-				},
-				options: {
-			 	styleId: 2,
-					templateId: 3
-				},
-				map: map
-			});		
+			//var secondLayer = new google.maps.FusionTablesLayer({
+			//	query: 	{
+			//	select: 'longitude_latitude',
+			//	from: '1WukvEi1lbr-5Eo0Xn-Vqi5OKS7jhvt1aPmDdOD8I'
+			//	},
+			//	options: {
+			//		styleId: 2,
+			//		templateId: 3
+			//	},
+			//	map: map
+			//});
+			
+			var query = "SELECT longitude_latitude, Punkte FROM " +
+            '1WukvEi1lbr-5Eo0Xn-Vqi5OKS7jhvt1aPmDdOD8I';
+			var encodedQuery = encodeURIComponent(query);
+
+			// Construct the URL
+			var url = ['https://www.googleapis.com/fusiontables/v1/query'];
+			url.push('?sql=' + encodedQuery);
+			url.push('&key=AIzaSyAT76tcYefMoGlGrAgBhFFF22W8JhQyQBI');
+			url.push('&callback=?');
+			
+			//example URL
+			//https://www.googleapis.com/fusiontables/v1/query?sql=SELECT longitude_latitude FROM 1WukvEi1lbr-5Eo0Xn-Vqi5OKS7jhvt1aPmDdOD8I LIMIT 5&key=AIzaSyAT76tcYefMoGlGrAgBhFFF22W8JhQyQBI
+
+			// Send the JSONP request using jQuery
+			$.ajax({
+			  url: url.join(''),
+			  dataType: 'jsonp',
+			  success: function (data) {
+				var rows = data['rows'];				
+				var markers = [];
+					for (var i in rows) {
+						//insert info window code
+						var lat = rows[i][0].split(", ")[0]
+						var lng = rows[i][0].split(", ")[1]
+						var latLng = new google.maps.LatLng(lat,lng);
+						
+						//add if statement, if its a win, loss, etc. use different image			
+						var image = 'icons/red_dot.png'						
+						
+						var contentString = 'Add info window content here'+
+							' and it will work';
+							
+						var infowindow = new google.maps.InfoWindow({
+							content: contentString
+						});
+						
+						var marker = new google.maps.Marker({'position': latLng, 
+															 'icon': image,
+															 'title': 'Here is a title.'});
+						
+						google.maps.event.addListener(marker, 'click', function() {
+							infowindow.open(map,marker);
+						
+						});
+						
+						markers.push(marker);
+					  }
+
+					var markerCluster = new MarkerClusterer(map, markers);
+				}
+			  });
+			
 		}
 
 		google.maps.event.addDomListener(window, 'load', initialize);

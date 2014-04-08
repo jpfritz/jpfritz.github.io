@@ -4,12 +4,48 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
     <title>clusterer</title>
+	
     <style>
       html, body, #map-canvas {
         height: 100%;
         margin: 0px;
         padding: 0px
       }
+	  #legend {
+		font-family: Arial, sans-serif;
+		font-size: 0.75em;
+		font-weight: bold;
+		text-transform: uppercase;
+		background: #fff;
+		opacity: 0.85;
+		padding: 5px;
+		margin: 5px;
+		border: 2px solid #999;
+	  }
+	  #legend img {
+		vertical-align: middle;
+	  }
+	  #legendTitle {
+		font-family: Arial, sans-serif;
+		font-size: 0.75em;
+		font-weight: bold;
+		text-transform: uppercase;
+		opacity: 1;
+		padding: 5px;
+		margin: 5px;
+	  }
+	  #shapes {
+		font-family: Arial, sans-serif;
+		font-size: 0.75em;
+		font-weight: bold;
+		text-transform: uppercase;
+		opacity: 1;
+		padding: 5px;
+		margin: 5px;
+	  }
+	  .legendpadding {
+		margin-bottom: 3px;
+	  }
     </style>
 
 	<link href="/apis/fusiontables/docs/samples/style/default.css"
@@ -140,8 +176,8 @@
 			//	map: map
 			//});
 			
-			var query = "SELECT longitude_latitude, Punkte FROM " +
-            '1WukvEi1lbr-5Eo0Xn-Vqi5OKS7jhvt1aPmDdOD8I';
+			var query = "SELECT Latitude, Longitude, Icon, 'Nr.', Info FROM " +
+            '1-cDsCW8T2_L0j6a1NPtY_wHN_hAyLUMay_L4j-IL';
 			var encodedQuery = encodeURIComponent(query);
 
 			// Construct the URL
@@ -159,38 +195,77 @@
 			  dataType: 'jsonp',
 			  success: function (data) {
 				var rows = data['rows'];				
+							
 				var markers = [];
 					for (var i in rows) {
 						//insert info window code
-						var lat = rows[i][0].split(", ")[0]
-						var lng = rows[i][0].split(", ")[1]
-						var latLng = new google.maps.LatLng(lat,lng);
+						var infoWindow = new google.maps.InfoWindow();
 						
-						//add if statement, if its a win, loss, etc. use different image			
-						var image = 'icons/red_dot.png'						
+						var lat = rows[i][0]
+						var lng = rows[i][1]
+						var image = rows[i][2]
+						var title = rows[i][3]
+						var content = rows[i][4]
+						var coordinate = new google.maps.LatLng(lat,lng);
 						
-						var contentString = 'Add info window content here'+
-							' and it will work';
-							
-						var infowindow = new google.maps.InfoWindow({
-							content: contentString
-						});
-						
-						var marker = new google.maps.Marker({'position': latLng, 
+						var marker = new google.maps.Marker({'position': coordinate, 
 															 'icon': image,
-															 'title': 'Here is a title.'});
+															 'title': 'Länderspiel #'+title});
+															 
+						google.maps.event.addListener(marker, 'mouseover', (function(marker, content) {
+						  return function(){
+						  infoWindow.setContent(content);
+						  infoWindow.open(map, marker);
+						  }
+						})(marker, content));
 						
-						google.maps.event.addListener(marker, 'click', function() {
-							infowindow.open(map,marker);
-						
+						google.maps.event.addListener(marker, 'mouseout', function() {
+						infoWindow.close();
 						});
 						
-						markers.push(marker);
+						markers.push(marker);						
+
 					  }
 
 					var markerCluster = new MarkerClusterer(map, markers);
 				}
 			  });
+
+					var legend = document.getElementById('legend');
+						for (var style in styles) {
+						  var name = style.name;
+						  var icon = style.icon;
+						  var div = document.createElement('div');
+						  div.innerHTML = '<img src="' + icon + '"> ' + name;
+						  legend.appendChild(div);
+						}
+						
+				map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(
+					document.getElementById('legend'));
+					
+					var legendTitle = document.getElementById('legendTitle');
+						for (var style in styles) {
+						  var name = style.name;
+						  var icon = style.icon;
+						  var div = document.createElement('div');
+						  div.innerHTML = '<img src="' + icon + '"> ' + name;
+						  legend.appendChild(div);
+						}
+						
+				map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(
+					document.getElementById('legendTitle'));					
+					
+					var shapes = document.getElementById('shapes');
+							for (var style in styles) {
+							  var name = style.name;
+							  var icon = style.icon;
+							  var div = document.createElement('div');
+							  div.innerHTML = '<img src="' + icon + '"> ' + name;
+							  shapes.appendChild(div);
+							}
+						
+				map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(
+					document.getElementById('shapes'));
 			
 		}
 
@@ -201,5 +276,35 @@
   </head>
   <body>
     <div id="map-canvas"></div>
+	<div id="legendTitle" style="z-index: 0; position: absolute; bottom: 150px; left: 55px;" class='legendpadding'>Spiele</div>
+	<div id="legend" style="z-index: 0; position: absolute; bottom: 25px; left: 0px;">
+		<table>
+			<tr>
+				<td width="33px" align='center'><img src='icons/m4.png'></td>
+				<td>Austragungsort</td>
+			</tr>
+			<tr>
+				<td width="33px" align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/green_dot.png'></td>
+				<td>Sieg</td>
+			</tr>
+			<tr>
+				<td width="33px" align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/blue_dot.png'></td>
+				<td>Unentschieden</td>
+			</tr>
+			<tr>
+				<td width="33px" align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/red_dot.png'></td>
+				<td>Niederlage</td>
+			</tr>
+			<tr>
+				<td width="33px" align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/bw_star.png'></td>
+				<td>Pflichtspiel</td>
+			</tr>
+		</table>
+	</div>
+	<div id="shapes" style="z-index: 0; position: absolute; bottom: 13px; right: 0px;">
+		<div align='center' class='legendpadding'>Bilanzen</div>
+		<img src='icons/spielanzahl.png'><br>
+		<img src='icons/bilanzstatus.png'>
+	</div>
   </body>
 </html>

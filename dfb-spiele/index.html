@@ -47,9 +47,6 @@
 		margin-bottom: 3px;
 	  }
     </style>
-
-	<link href="/apis/fusiontables/docs/samples/style/default.css"
-        rel="stylesheet" type="text/css">
 		
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
     </script>
@@ -65,8 +62,9 @@
 	
 		function initialize() {
 			var map = new google.maps.Map(document.getElementById('map-canvas'), {
-			center: new google.maps.LatLng(25.504721226147495, 12.844390869140625),
-			zoom: 2
+			center: new google.maps.LatLng(17, 4),
+			zoom: 3,
+			streetViewControl: false
 			});
 			
 			var style = [

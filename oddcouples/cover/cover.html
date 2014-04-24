@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+		<title>cover</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style type="text/css" media="screen">
+			body {
+				background-image:url('NYC.jpg');
+				background-repeat:no-repeat;
+				background-size:cover;
+				}
+			#floater {
+				float:right;
+				padding-right:100px;
+				padding-left:20px;
+				padding-top:20px;
+				font-family: 'Arvo', serif;
+				font-weight:bold;
+				font-size:450%
+				}
+		</style>
+				<script src="http://code.jquery.com/jquery-latest.js"></script> 
+		<script src="jquery-photo-resize.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$("img").photoResize({
+					bottomSpacing: 15
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="floater">
+			ODD COUPLES
+		</div>
+		<center>
+			<img src="covertest.gif"></img>
+		</center>
+	</body>
+</html>

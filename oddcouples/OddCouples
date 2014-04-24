@@ -1,0 +1,22 @@
+<html>
+<head> 
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Odd Couples</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="curtain.css">
+    <link href='http://fonts.googleapis.com/css?family=Caesar+Dressing|Shojumaru|Ceviche+One' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<ul class="menu">
+    <li><button href="#up">&#8593;</button></li>
+    <li><button href="#down">&#8595;</button></li>
+</ul>
+<ol class="curtains">
+    <li id="intro" class="cover">
+       <div class="cover-wrapper">
+		<embed src="cover/cover.swf" width="1289" height="906">
+		</embed>
+        </div>
+    </li>

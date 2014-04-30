@@ -204,16 +204,7 @@
 					'click', function() {
 					  filterMap(layer, tableId, map);
 				});
-				
-				google.maps.event.addDomListener(document.getElementById('PS'),
-					'click', function() {
-					  filterMap(layer, tableId, map);
-				});
-				
-				google.maps.event.addDomListener(document.getElementById('FS'),
-					'click', function() {
-					  filterMap(layer, tableId, map);
-				});
+
 		}
 		
 		function changeMap_0() {
@@ -234,6 +225,21 @@
 			query: {
 			  select: "col25",
 			  from: tableId,
+			  where: whereClause
+			}
+		  });
+		}
+		
+		function changeMap_1() {
+		  var whereClause;
+		  var searchString = document.getElementById('search-string_1').value.replace(/'/g, "\\'");
+		  if (searchString != '--Select--') {
+			whereClause = "'F(0)/P(1)' = '" + searchString + "'";
+		  }
+		  layer_1.setOptions({
+			query: {
+			  select: "col25",
+			  from: "11jvxEY_amSEUy4IaWZE4652trcb3VLUu_x4XMUeD",
 			  where: whereClause
 			}
 		  });
@@ -282,16 +288,21 @@
   <body>
 	<div id="map-canvas"></div>
 	
-	<div id="legendTitle" style="z-index: 0; position: absolute; bottom: 188px; left: 65px;">Spiele</div>
+	<div id="legendTitle" style="z-index: 0; position: absolute; bottom: 134px; left: 50px;">Spiele</div>
 	
 	<div id="legend" class="legend" style="z-index: 0; position: absolute; bottom: 25px; left: 0px;text-transform:uppercase;">
 		<table>
 			<tr>
-				<td align='center'><img src='icons/m4.png'></td>
-				<td>Austragungsort</td>
-				<td></td>
+				<td colspan='3'>      
+					<label class="layer-wizard-search-label">
+						<select id="search-string_1" onchange="changeMap_1(this.value);">
+						  <option value="--Select--">—alle Spiele—</option>
+						  <option value="1">Pflichtspiele</option>						  
+						  <option value="0">Freundschaftsspiele</option>
+						</select>
+					</label> 
+				</td>
 			</tr>
-			<tr>
 				<td align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/green_dot.png'></td>
 				<td>Sieg</td>
 				<td><input id="W" type="checkbox" style="margin-right:3px" checked="checked" value="W" name="spiel"></td>
@@ -306,21 +317,11 @@
 				<td>Niederlage</td>
 				<td><input id="L" type="checkbox" style="margin-right:3px" checked="checked" value="L" name="spiel"></td>
 			</tr>
-			<tr>
-				<td></td>
-				<td>Pflichtspiel</td>
-				<td><input id="PS" type="checkbox" style="margin-right:3px" checked="checked" value="PS"></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td>Freundschaftsspiel</td>
-				<td><input id="FS" type="checkbox" style="margin-right:3px" checked="checked" value="FS"></td>
-			</tr>
 		</table>
 	</div>
 	
 	<div id="shapes" style="z-index: 0; position: absolute; bottom: 13px; right: 0px;">
-		<div align='center' style='margin-bottom: 5px'>Bilanzen</div>
+		<div align='center' style='margin-bottom: 3px'>Bilanzen</div>
 		<img src='icons/spielanzahl.png'><br>
 		<img src='icons/bilanzstatus.png'>
 	</div>

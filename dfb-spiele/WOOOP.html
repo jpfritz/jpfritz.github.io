@@ -1,255 +1,450 @@
 <!DOCTYPE html>
 <html>
   <head>
-	  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	  <meta charset="utf-8">
-		<title>WOOOOOP</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+    <title>DFB-Spiele</title>
+	
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+	  
+	  .legend {
+		font-family: Arial, sans-serif;
+		font-size: 12px;
+		font-weight: bold;
+		background: #fff;
+		opacity: 0.85;
+		padding: 5px;
+		margin: 5px;
+		border: 2px solid #999;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	  }
+	  
+	  #legend img {
+		vertical-align: middle;
+	  }
+	  
+	  #legendTitle {
+		font-family: Arial, sans-serif;
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+		opacity: 1;
+		padding: 5px;
+		margin: 5px;
+	  }
+	  
+	  #shapes {
+		font-family: Arial, sans-serif;
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+		opacity: 1;
+		padding: 5px;
+		margin: 5px;
+	  }
+    </style>
+
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico">
+	<link rel="icon" type="image/png" sizes="196x196" href="/favicon-196.png">
+	<link rel="icon" type="image/png" sizes="160x160" href="/favicon-160.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+	<link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/favicon-152.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/favicon-144.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/favicon-120.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/favicon-114.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/favicon-76.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/favicon-72.png">
+	<link rel="apple-touch-icon" href="favicon-57.png">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="/favicon-144.png">
+	<meta name="msapplication-config" content="/browserconfig.xml">
 		
-		<style>
-		  html, body, #map-canvas {
-			height: 100%;
-			margin: 0px;
-			padding: 0px
-		  }
-		  
-		  .legend {
-			font-family: Arial, sans-serif;
-			font-size: 0.75em;
-			font-weight: bold;
-			text-transform: uppercase;
-			background: #fff;
-			opacity: 0.85;
-			padding: 5px;
-			margin: 5px;
-			border: 2px solid #999;
-			box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-		  }
-		  
-		  #legend img {
-			vertical-align: middle;
-		  }
-		  
-		  #legendTitle {
-			font-family: Arial, sans-serif;
-			font-size: 0.75em;
-			font-weight: bold;
-			text-transform: uppercase;
-			opacity: 1;
-			padding: 5px;
-			margin: 5px;
-		  }
-		  
-		  #shapes {
-			font-family: Arial, sans-serif;
-			font-size: 0.75em;
-			font-weight: bold;
-			text-transform: uppercase;
-			opacity: 1;
-			padding: 5px;
-			margin: 5px;
-		  }
-		  
-		  .legendpadding {
-			margin-bottom: 3px;
-		  }
-		  
-		  .filter {
-			font-family: Arial, sans-serif;
-			font-size: 0.75em;
-			font-weight: bold;
-			text-transform: uppercase;
-		  }
-		</style>
-				
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-		</script>
-			
-		<script type="text/javascript"
-			src="http://maps.google.com/maps/api/js?sensor=true"></script>
-			
-		<script type="text/javascript" src="markerclusterer.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+    </script>
 		
-		<script type="text/javascript">
-			function initialize() {
-			  var key = 'AIzaSyAT76tcYefMoGlGrAgBhFFF22W8JhQyQBI', //use your own key here
-				  style = [{
+    <script type="text/javascript"
+        src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		
+    <script type="text/javascript" src="markerclusterer.js"></script>
+		
+
+		
+    <script type="text/javascript">
+	
+		function initialize() {
+			
+			var tableId = '11jvxEY_amSEUy4IaWZE4652trcb3VLUu_x4XMUeD';
+			var locationColumn = 'col25';
+		
+			var map = new google.maps.Map(document.getElementById('map-canvas'), {
+			center: new google.maps.LatLng(25.504721226147495, 12.844390869140625),
+			zoom: 3,
+			streetViewControl: false
+			});
+			
+			var style = [
+					{
 					  featureType: 'all',
 					  elementType: 'all',
-					  stylers: [{
-						  saturation: -85
-					  }, {
-						  lightness: 57
-					  }, {
-						  gamma: 0.31
-					  }, {
-						  hue: "#c8d2a1"
-					  }]
-				  }, {
+					  stylers: [
+						{ saturation: -100 },
+						{ lightness: 71 },
+						{ gamma: 0.22 },
+				//		{ hue: "#c8d2a1" }
+					  ]
+					},
+					{
 					  featureType: 'road',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'off'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'off' }
+					  ]
+					},
+					{
 					  featureType: 'poi',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'simplified'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'simplified' }
+					  ]
+					},
+					{
 					  featureType: 'administrative.country',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'simplified'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'simplified' }
+					  ]
+					},
+					{
 					  featureType: 'administrative.province',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'off'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'off' }
+					  ]
+					},
+					{
 					  featureType: 'administrative.locality',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'on'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'on' }
+					  ]
+					},
+					{
 					  featureType: 'administrative.neighborhood',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'off'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'off' }
+					  ]
+					},
+					{
 					  featureType: 'administrative.land_parcel',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'off'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'off' }
+					  ]
+					},
+					{
 					  featureType: 'water',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'simplified'
-					  }]
-				  }, {
+					  stylers: [
+						{ visibility: 'simplified' }
+					  ]
+					},
+					{
 					  featureType: 'transit',
 					  elementType: 'all',
-					  stylers: [{
-						  visibility: 'off'
-					  }]
-				  }],
-				  mapOptions = {
-						zoom: 2,
-						center: new google.maps.LatLng(25.504721226147495, 12.844390869140625),
-						streetViewControl: false
-				  },
-				  map = new google.maps.Map(document.getElementById('map_canvas'),
-				  mapOptions);
-			  ctrl = $('<div id="ctrl"/>'),
+					  stylers: [
+						{ visibility: 'off' }
+					  ]
+					}
+				  ];
+				  
+				  var styledMapType = new google.maps.StyledMapType(style, {
+					map: map,
+					name: 'Styled Map'
+				  });
+				  
+				  map.mapTypes.set('map-style', styledMapType);
+				  map.setMapTypeId('map-style');
+			
+				  
+			layer_0 = new google.maps.FusionTablesLayer({
+				query: {
+				  select: "col29>>1",
+				  from: "1udbjeSrV9KC1bnmTncW0QB2j9zFeHOrfUpKlEo7z"
+				},
+				map: map,
+				styleId: 2,
+				templateId: 3
+			});
+			
+			var layer = new google.maps.FusionTablesLayer({
+				map: map,
+				styleId: 4,
+				templateId: 6
+				});
+			filterMap(layer, tableId, map);
+			
+				google.maps.event.addDomListener(document.getElementById('W'),
+					'click', function() {
+					  filterMap(layer, tableId, map);
+				});
 
-			  markerCluster = new MarkerClusterer(map, [], {
-				  imagePath: 'http://jpfritz.github.io/dfb-spiele/icons/m'
-			  }),
-			  fx = function () {
+				google.maps.event.addDomListener(document.getElementById('D'),
+					'click', function() {
+					  filterMap(layer, tableId, map);
+				});
 
-				  var b = $('input:checked', ctrl),
-					  where = [],
-					  query = "SELECT Latitude, Longitude, Icon, 'Nr.', Info, 'W/D/L' FROM " +
-						  '11jvxEY_amSEUy4IaWZE4652trcb3VLUu_x4XMUeD',
-					  url = ['https://www.googleapis.com/fusiontables/v1/query',
-						  '?key=' + key,
-						  '&callback=?'];
-				  if (!b.length) {
-					  markerCluster.clearMarkers();
-					  crtl.removeClass('load');
-				  } else {
-					  if (ctrl.hasClass('load')) {
-						  return false;
-					  }
-					  ctrl.addClass('load')
-					  b.each(function () {
-						  where.push(this.value)
-					  });
-					  where = " where 'W/D/L' IN('" + where.join("','") + "')";
-					  url.push('&sql=' + encodeURIComponent(query + where));
+				google.maps.event.addDomListener(document.getElementById('L'),
+					'click', function() {
+					  filterMap(layer, tableId, map);
+				});
+				
+				google.maps.event.addDomListener(document.getElementById('gametype'),
+					'change', function() {
+					  gameTypeFilter(layer, tableId, locationColumn);
+				});
+					  
+				google.maps.event.addDomListener(document.getElementById('countries'),
+					'change', function() {
+					  gameCountryFilter(layer, tableId, locationColumn);
+				});
 
-
-					  $.ajax({
-						  url: url.join(''),
-						  dataType: 'jsonp',
-						  success: function (data) {
-
-							  var rows = data['rows'];
-							  if (!rows.length) return;
-							  var markers = [];
-							  for (var i in rows) {
-
-								  //insert info window code
-								  var infoWindow = new google.maps.InfoWindow();
-
-								  var lat = rows[i][0]
-								  var lng = rows[i][1]
-								  var image = rows[i][2]
-								  var title = rows[i][3]
-								  var content = rows[i][4]
-								  var result = rows[i][5]
-								  var coordinate = new google.maps.LatLng(lat, lng);
-
-
-								  var marker = new google.maps.Marker({
-									  'position': coordinate,
-										  'icon': image,
-										  'title': 'Länderspiel #' + title,
-										  'result': result,
-									  map: map
-								  });
-								  
-
-								  google.maps.event.addListener(marker, 'mouseover', (function (marker, content) {
-									  return function () {
-										  infoWindow.setContent(content);
-										  infoWindow.open(map, marker);
-									  }
-								  })(marker, content));
-
-								  google.maps.event.addListener(marker, 'mouseout', function () {
-									  infoWindow.close();
-								  });
-
-								  markers.push(marker);
-
-							  }
-							  markerCluster.clearMarkers();
-							  markerCluster.addMarkers(markers);
-							  $('#ctrl').removeClass('load');
-						  }
-
-
-					  })
-				  }
-			  };
-			  $.each({
-				  L: 'Niederlage',
-				  W: 'Sieg',
-				  D: 'Unentschieden'
-			  }, function (k, v) {
-				  $('<div/>').text(v).appendTo(ctrl)
-					  .prepend($('<input type="checkbox" checked/>').val(k).click(fx));
-			  });
-			  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(ctrl[0]);
-			  fx();
-		  }
-
-		  google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
-	</head>
-	
-	<body>
-		<div id="map_canvas"></div>
+		}		
 		
-		<div id="ctrl" class="" style="z-index: 0; position: absolute; right: 101px; top: 0px;"><div><input type="checkbox" checked="" value="L">Niederlage</div><div><input type="checkbox" checked="" value="W">Sieg</div><div><input type="checkbox" checked="" value="D">Unentschieden</div></div>
-	</body>
+			function filterMap(layer, tableId, map) {
+			var where = generateWhere();
 
-</html>
+			if (where) {
+			  if (!layer.getMap()) {
+				layer.setMap(map);
+			  }
+			  layer.setOptions({
+				query: {
+				  select: 'col25',
+				  from: tableId,
+				  where: where
+				}
+			  });
+			} else {
+			  layer.setMap(null);
+			}
+			}
+	  
+			function generateWhere() {
+			var filter = [];
+			var spiele = document.getElementsByName('spiel');
+		//	var gametype = document.getElementById('gametype').value;
+			
+				for (var i = 0, spiel; spiel = spiele[i]; i++) {
+				  if (spiel.checked) {
+					var ergebnis = spiel.value.replace(/'/g, '\\\'');
+					filter.push("'" + ergebnis + "'");
+				  }
+				}
+			
+			var where = '';
+			if (filter.length) {
+			  where = "'W/D/L' IN (" + filter.join(',') + ')';
+			}
+			return where;
+			}
+		
+			function gameTypeFilter(layer, tableId, locationColumn) {
+			var gametype = document.getElementById('gametype').value.replace(/'/g, "\\'");
+			var	whereClause = "'F(0)/P(1)' = '" + gametype + "'";
+			if (gametype != '--Select--') {
+				layer.setOptions({
+					query: {
+					  select: locationColumn,
+					  from: tableId,
+					  where: whereClause
+					}
+				});
+			  }
+			}
+		
+			function gameCountryFilter(layer, tableId, locationColumn) {
+			var countries = document.getElementById('countries').value.replace(/'/g, "\\'");
+			var	whereClause = "'Gegner' = '" + countries + "'";
+			if (countries != '--Select--') {
+				layer.setOptions({
+					query: {
+					  select: locationColumn,
+					  from: tableId,
+					  where: whereClause
+					}
+				});
+			  }
+			}
+			
+			function bilanzen() {
+			  var whereClause;
+			  var searchString = document.getElementById('countries').value.replace(/'/g, "\\'");
+			  if (searchString != '--Select--') {
+				whereClause = "'Gegner' = '" + searchString + "'";
+			  }
+			  layer_0.setOptions({
+				query: {
+				  select: "col29>>1",
+				  from: "1udbjeSrV9KC1bnmTncW0QB2j9zFeHOrfUpKlEo7z",
+				  where: whereClause
+				}
+			  });
+			}
+      
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
 	
+  </head>
+  <body>
+	<div id="map-canvas"></div>
+	
+	<div id="legendTitle" style="z-index: 0; position: absolute; bottom: 134px; left: 50px;">Spiele</div>
+	
+	<div id="legend" class="legend" style="z-index: 0; position: absolute; bottom: 25px; left: 0px;text-transform:uppercase;">
+		<table>
+			<tr>
+				<td colspan='3'>      
+					<label class="layer-wizard-search-label">
+						<select id="gametype">
+						  <option value="--Select--">—alle Spiele—</option>
+						  <option value="1">Pflichtspiele</option>
+						  <option value="0">Freundschaftsspiele</option>
+						</select>
+					</label> 
+				</td>
+			</tr>
+				<td align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/green_dot.png'></td>
+				<td>Sieg</td>
+				<td><input id="W" type="checkbox" style="margin-right:3px" checked="checked" value="W" name="spiel"></td>
+			</tr>
+			<tr>
+				<td align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/blue_dot.png'></td>
+				<td>Unentschieden</td>
+				<td><input id="D" type="checkbox" style="margin-right:3px" checked="checked" value="D" name="spiel"></td>
+			</tr>
+			<tr>
+				<td align='center'><img src='https://dl.dropboxusercontent.com/u/24952823/icons/red_dot.png'></td>
+				<td>Niederlage</td>
+				<td><input id="L" type="checkbox" style="margin-right:3px" checked="checked" value="L" name="spiel"></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="shapes" style="z-index: 0; position: absolute; bottom: 13px; right: 0px;">
+		<div align='center' style='margin-bottom: 3px'>Bilanzen</div>
+		<img src='icons/spielanzahl.png'><br>
+		<img src='icons/bilanzstatusalt.png'>
+	</div>
+	
+	<div class="legend" style="position: absolute; left: 80px; top: 20px;">
+		<label class="layer-wizard-search-label">
+				GEGNER
+				<select id="countries" onchange="bilanzen(this.value);">
+				  <option value="--Select--">—alle—</option>
+				  <option value="&#xC4;gypten">Ägypten</option>
+				  <option value="Albanien">Albanien</option>
+				  <option value="Algerien">Algerien</option>
+				  <option value="Argentinien">Argentinien</option>
+				  <option value="Armenien">Armenien</option>
+				  <option value="Aserbaidschan">Aserbaidschan</option>
+				  <option value="Australien">Australien</option>
+				  <option value="Belgien">Belgien</option>
+				  <option value="Bolivien">Bolivien</option>
+				  <option value="Bosnien und Herzegowina">Bosnien und Herzegowina</option>
+				  <option value="Brasilien">Brasilien</option>
+				  <option value="Bulgarien">Bulgarien</option>
+				  <option value="Chile">Chile</option>
+				  <option value="China">China</option>
+				  <option value="Costa Rica">Costa Rica</option>
+				  <option value="DDR">DDR</option>
+				  <option value="Dänemark">Dänemark</option>
+				  <option value="Ecuador">Ecuador</option>
+				  <option value="Elfenbeinküste">Elfenbeinküste</option>
+				  <option value="England">England</option>
+				  <option value="Estland">Estland</option>
+				  <option value="Finnland">Finnland</option>
+				  <option value="Frankreich">Frankreich</option>
+				  <option value="Färöer">Färöer</option>
+				  <option value="GUS">GUS</option>
+				  <option value="Georgien">Georgien</option>
+				  <option value="Gesamt">Gesamt</option>
+				  <option value="Ghana">Ghana</option>
+				  <option value="Griechenland">Griechenland</option>
+				  <option value="Iran">Iran</option>
+				  <option value="Irland">Irland</option>
+				  <option value="Island">Island</option>
+				  <option value="Israel">Israel</option>
+				  <option value="Italien">Italien</option>
+				  <option value="Japan">Japan</option>
+				  <option value="Jugoslawien">Jugoslawien</option>
+				  <option value="Kamerun">Kamerun</option>
+				  <option value="Kanada">Kanada</option>
+				  <option value="Kasachstan">Kasachstan</option>
+				  <option value="Kolumbien">Kolumbien</option>
+				  <option value="Kroatien">Kroatien</option>
+				  <option value="Kuwait">Kuwait</option>
+				  <option value="Lettland">Lettland</option>
+				  <option value="Liechtenstein">Liechtenstein</option>
+				  <option value="Litauen">Litauen</option>
+				  <option value="Luxemburg">Luxemburg</option>
+				  <option value="Malta">Malta</option>
+				  <option value="Marokko">Marokko</option>
+				  <option value="Mexiko">Mexiko</option>
+				  <option value="Moldawien">Moldawien</option>
+				  <option value="Neuseeland">Neuseeland</option>
+				  <option value="Niederlande">Niederlande</option>
+				  <option value="Nigeria">Nigeria</option>
+				  <option value="Nordirland">Nordirland</option>
+				  <option value="Norwegen">Norwegen</option>
+				  <option value="Oman">Oman</option>
+				  <option value="Österreich">Österreich</option>		  
+				  <option value="Paraguay">Paraguay</option>
+				  <option value="Peru">Peru</option>
+				  <option value="Polen">Polen</option>
+				  <option value="Portugal">Portugal</option>
+				  <option value="Protektorat Böhmen und Mähren">Protektorat Böhmen und Mähren</option>
+				  <option value="Rumänien">Rumänien</option>
+				  <option value="Russland">Russland</option>
+				  <option value="San Marino">San Marino</option>
+				  <option value="Saudi-Arabien">Saudi-Arabien</option>
+				  <option value="Schottland">Schottland</option>
+				  <option value="Schweden">Schweden</option>
+				  <option value="Schweiz">Schweiz</option>
+				  <option value="Serbien">Serbien</option>
+				  <option value="Serbien und Montenegro">Serbien und Montenegro</option>
+				  <option value="Slowakei">Slowakei</option>
+				  <option value="Slowenien">Slowenien</option>
+				  <option value="Sowjetunion">Sowjetunion</option>
+				  <option value="Spanien">Spanien</option>
+				  <option value="Südafrika">Südafrika</option>
+				  <option value="Südkorea">Südkorea</option>
+				  <option value="Thailand">Thailand</option>
+				  <option value="Tschechien">Tschechien</option>
+				  <option value="Tschechoslowakei">Tschechoslowakei</option>
+				  <option value="Tunesien">Tunesien</option>
+				  <option value="Türkei">Türkei</option>
+				  <option value="Ukraine">Ukraine</option>
+				  <option value="Ungarn">Ungarn</option>
+				  <option value="Uruguay">Uruguay</option>
+				  <option value="Vereinigte Arabische Emirate">Vereinigte Arabische Emirate</option>
+				  <option value="Vereinigte Staaten">Vereinigte Staaten</option>
+				  <option value="Wales">Wales</option>
+				  <option value="Weißrussland">Weißrussland</option>
+				  <option value="Zypern">Zypern</option>
+				</select>
+			  </label> 
+	</div>
+  </body>
+</html>

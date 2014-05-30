@@ -460,9 +460,9 @@
   <body>
 	<div id="map-canvas"></div>
 	
-	<div class="legend" style="position: absolute; left: 80px; top: 10px; width:171px;">
+	<div class="legend" style="position: absolute; left: 80px; top: 10px;">
 		<label>
-			<select id="countries" onchange="filter(this.value);" style="border:1; border-color:#ccc;">
+			<select id="countries" onchange="filter(this.value);" style="border:1; border-color:#ccc; font-family: Arial, sans-serif; font-size: 12px;">
 				<option value="--Select--">ADVERSAIRE</option>
 				<option value='South Africa'>Afrique du Sud</option>
 				<option value='Albania'>Albanie</option>
@@ -553,9 +553,9 @@
 			</select>
 		</label><br>
 		
-		<div style="margin-top:5px;" align="center">
+		<div style="margin-top:5px; margin-left:7px;">
 			<label>
-				<select id="gametype" onchange="filter(this.value);" style="width:166px; border:0; font-weight:bold;">
+				<select id="gametype" onchange="filter(this.value);" style="border:0; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:125px;">
 				  <option value="--Select--">Tous les matchs</option>
 				  <option value="1">Compétitions</option>
 				  <option value="0">Amicaux</option>
@@ -565,12 +565,12 @@
 		
 		<div style="margin-left:12px;">
 			de
-			<input type="text" id="yearMin" style="border:0; color:#003366; font-weight:bold; width:33px; margin-left:2px;" value="1904" onchange="sliderInput(this.value)">
+			<input type="text" id="yearMin" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="1904" onchange="sliderInput(this.value)">
 			à
-			<input type="text" id="yearMax" style="border:0; color:#003366; font-weight:bold; width:33px; margin-left:2px;" value="2015" onchange="sliderInput(this.value)">
-			</div>
-			<div>
-			<div id="slider-range" style="margin-left:8px; margin-top:8px; width:151px;"></div>
+			<input type="text" id="yearMax" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="2015" onchange="sliderInput(this.value)">
+		</div>
+		<div>
+			<div id="slider-range" style="margin-left:7px; margin-top:8px; width:151px;"></div>
 		</div>		
 		
 		<div style="margin-top:5px;">

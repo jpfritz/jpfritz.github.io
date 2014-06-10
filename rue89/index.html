@@ -18,14 +18,14 @@
 	  
 	  .legend {
 		font-family: Arial, sans-serif;
-		font-size: 0.75em;
+		font-size: 12px;
 		font-weight: bold;
 		background: #fff;
 		opacity: 0.85;
-		padding: 0.375em;
-		margin: 0.375em;
-		border: 0.125em solid #999;
-		box-shadow: 0 0.125em 0.375em rgba(0, 0, 0, 0.3);
+		padding: 5px;
+		margin: 5px;
+		border: 1px solid #999;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 	  }
 	  
 	  a:link{
@@ -35,7 +35,7 @@
 	  
 	  a:visited {
 	    text-decoration:none;
-		color: #999;
+		color: #666;
 	  }
 	  
 	  a:link:hover, a:active, #cfilter:hover {
@@ -510,11 +510,11 @@
   <body>
 	<div id="map-canvas"></div>
 	
-	<div id="highlight" style="position: absolute; right: 1.125em; top: 0.813em;"></div>
+	<div id="highlight" style="position: absolute; right: 18px; top: 13px;"></div>
 	
-	<div class="legend" style="position: absolute; right: 0.375em; top: 0.375em;">
+	<div class="legend" style="position: absolute; right: 5px; top: 5px;">
 		<label>
-			<select id="countries" onchange="filter(this.value);" style="border:1; border-color:#ccc; font-family: Arial, sans-serif; font-size: 1em;">
+			<select id="countries" onchange="filter(this.value);" style="border:1; border-color:#ccc; font-family: Arial, sans-serif; font-size: 12px;">
 				<option value='--Select--'>Choisir un adversaire</option>
 				<option value='Grand Total'>- TOUS</option>
 				<option value='South Africa'>Afrique du Sud</option>
@@ -606,69 +606,70 @@
 			</select>
 		</label><br>
 		
-		<div style="margin-top:0.313em; margin-left:0.4em;">
+		<div style="margin-top:5px; margin-left:7px;">
 			<label>
-				<select id="gametype" onchange="filter(this.value);" style="border:0; font-weight:bold; font-family: Arial, sans-serif; font-size: 1em; width:10.5em;">
-				  <option value="--Select--">Tous les matches</option>
+				<select id="gametype" onchange="filter(this.value);" style="border:0; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:125px;">
+				  <option value="--Select--">Tous les matchs</option>
 				  <option value="1">Compétitions</option>
 				  <option value="0">Amicaux</option>
 				</select>
 			</label> 		
 		</div>
 		
-		<div style="margin-left:0.77em;">
+		<div style="margin-left:12px;">
 			de
-			<input type="text" id="yearMin" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 1em; width:2.5em; margin-left:0.125em;" value="1904" onchange="sliderInput(this.value)">
+			<input type="text" id="yearMin" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="1904" onchange="sliderInput(this.value)">
 			à
-			<input type="text" id="yearMax" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 1em; width:2.5em; margin-left:0.125em;" value="2015" onchange="sliderInput(this.value)">
+			<input type="text" id="yearMax" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="2015" onchange="sliderInput(this.value)">
 		</div>
-		
 		<div>
-			<div id="slider-range" style="margin-left:0.5em; margin-top:0.5em; width:11.6em;"></div>
+			<div id="slider-range" style="margin-left:7px; margin-top:8px; width:151px;"></div>
 		</div>		
 		
-		<div style="margin-top:0.313em;">
+		<div style="margin-top:5px;">
 			<table>
 				<tr>
-					<td align='center' width='0.938em'><img src='icons/green_dot.png'></td>
-					<td width="100em;">VICTOIRES</td>
-					<td width='22em;' align='right'><div id="winTotal"></div></td>
-					<td width='0.938em;'><input id="winBox" type="checkbox" checked="checked"
+					<td align='center' width='15px'><img src='icons/green_dot.png'></td>
+					<td width="90px">VICTOIRES</td>
+					<td width='26px' align='right'><div id="winTotal"></div></td>
+					<td width='15px'><input id="winBox" type="checkbox" checked="checked"
 					  value="W" name="game"></td>
 				</tr>
 				<tr>
-					<td align='center' width='0.938em'><img src='icons/yellow_dot.png'></td>
-					<td width="100em;">MATCHS NUL</td>
-					<td width='22em;' align='right'><div id="drawTotal"></div></td>
-					<td width='0.938em;'><input id="drawBox" type="checkbox" checked="checked" 
+					<td align='center' width='15px'><img src='icons/yellow_dot.png'></td>
+					<td width="90px">MATCHS NUL</td>
+					<td width='26px' align='right'><div id="drawTotal"></div></td>
+					<td width='15px'><input id="drawBox" type="checkbox" checked="checked" 
 					  value="D" name="game"></td>
 				</tr>
 				<tr>
-					<td align='center' width='0.938em'><img src='icons/red_dot.png'></td>
-					<td width="100m;">DÉFAITES</td>
-					<td width='22em;' align='right'><div id="lossTotal"></div></td>
-					<td width='0.938em;'><input id="lossBox" type="checkbox" checked="checked" 
+					<td align='center' width='15px'><img src='icons/red_dot.png'></td>
+					<td width="90px">DÉFAITES</td>
+					<td width='26px' align='right'><div id="lossTotal"></div></td>
+					<td width='15px'><input id="lossBox" type="checkbox" checked="checked" 
 					  value="L" name="game"></td>
 				</tr>		
 			</table>
 		</div>
-		
-		<div style='margin-top:1em; margin-left:0.750em;'>
+
+		<div style='margin-top:10px; margin-left:12px;'>
 		Contre ce pays,<br>la France a un bilan:<br>
 		</div>
-		<div style='margin-top:0.25em;' align='center'>
+		<div style='margin-top:3px' align='center'>
 		<img src='icons/legendebar.png'>
 		</div>		
-		<div style='margin-top:0.313em; margin-left:0.750em;'>
-		Nombre de matches:
+		<div style='margin-top:5px; margin-left:12px;'>
+		Nombre de matches:<br>
 		</div>
-		<div style='margin-top:0.188em;' align='center'>
+		<div style='margin-top:3px' align='center'>
 		<img src='icons/legende2bar.png'>
 		</div>
 		
-		<div style='margin-top:0.125em; text-align:right; font-size: 0.667em; font-color:#999; font-style:italic;'><a target="_blank" href='http://fr.wikipedia.org/wiki/Liste_des_matchs_de_l%27%C3%A9quipe_de_France_de_football_par_adversaire'>source</a></div>
+		<div style='margin-top:2px; text-align:right; font-size:8px; font-color:#999; font-style:italic;'><a target="_blank" href='http://fr.wikipedia.org/wiki/Liste_des_matchs_de_l%27%C3%A9quipe_de_France_de_football_par_adversaire'>source</a></div>
 		
-		<div style='margin-top:0.125em; font-size: 0.667em; color:#999; font-style:italic;'><a target="_blank" href='http://jpfritz.net'>Johannes Neukamm</a> pour Rue89</div>
+		<div style='margin-top:2px; font-size:8px; color:#999; font-style:italic;'><a target="_blank" href='http://jpfritz.net'>Johannes Neukamm</a> pour Rue89</div>
+		
+	</div>
 		
 	</div>
 	

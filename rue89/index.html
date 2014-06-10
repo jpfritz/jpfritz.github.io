@@ -47,11 +47,15 @@
 		height:10px;
 		padding: 5px;
 		margin: 5px;
-		background: rgba(0,102,255,0.7);
+		background: rgba(0,102,255,0.1);
 		border-radius: 2x;
 		box-shadow: 3px 0px 35px 35px rgba(0,102,255,0.1);
 		display:none;
 	  }
+	  
+	  .highlight {
+		background: rgba(0,102,255,0.1);
+	  }	  
     </style>
 
 	<link rel="stylesheet"
@@ -255,6 +259,8 @@
 					'click', function() {
 						$('#countries').val(e.row['country'].value);
 						filter();
+						$("#countries").removeClass( "highlight" );
+						$("#countries").addClass( "highlight", 2500 );
 						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
@@ -270,6 +276,8 @@
 					'click', function() {
 						$('#countries').val(e.row['country'].value);
 						filter();
+						$("#countries").removeClass( "highlight" );
+						$("#countries").addClass( "highlight", 2500 );
 						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
@@ -277,6 +285,7 @@
 			});
 			
 			$(document).ready( function() {
+				$("#countries").addClass( "highlight", 2500 );
 				$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 				$("#highlight").fadeOut(1250);
 			});
@@ -507,7 +516,7 @@
   <body>
 	<div id="map-canvas"></div>
 	
-	<div id="highlight" style="position: absolute; right: 18px; top: 13px;"></div>
+	<div id="highlight" style="position: absolute; right: 16px; top: 13px;"></div>
 	
 	<div class="legend" style="position: absolute; right: 5px; top: 5px;">
 		<label>

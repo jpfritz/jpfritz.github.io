@@ -260,7 +260,7 @@
 						$('#countries').val(e.row['country'].value);
 						filter();
 						$("#countries").removeClass( "highlight" );
-						$("#countries").addClass( "highlight", 2500 );
+						$("#countries").addClass( "highlight" );
 						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
@@ -277,19 +277,12 @@
 						$('#countries').val(e.row['country'].value);
 						filter();
 						$("#countries").removeClass( "highlight" );
-						$("#countries").addClass( "highlight", 2500 );
+						$("#countries").addClass( "highlight" );
 						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
 				
-			});
-			
-			$(document).ready( function() {
-				$("#countries").addClass( "highlight", 2500 );
-				$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
-				$("#highlight").fadeOut(1250);
 			});			
-			
 		}
 			
 			function filter() {
@@ -320,21 +313,25 @@
 			    }
 				
 			    if (selectCountry === '--Select--') {
+				  $("#countries").removeClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'WDL' IN (" +
 				    checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";				
 				} else if (selectCountry === 'Grand Total') {
+				  $("#countries").addClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'WDL' IN (" +
 					checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				} else if (selectCountry === 'GermanyTotal') {
+				  $("#countries").addClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause = "'country' IN ('" + selectCountry + "')";
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'country' IN ('Germany', 'West Germany', 'German Reich', 'Weimar Republic') AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'country' IN ('Germany', 'West Germany', 'Germany Reich', 'Weimar Republic') AND 'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				} else {				
+				  $("#countries").addClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause = "'country' IN ('" + selectCountry + "')";
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'country' IN ('" +
@@ -384,13 +381,14 @@
 					  },
 					  map: map
 					});
-					set_totals(whereClause2);	
+					set_totals(whereClause2);
 				} else {
 					layer3.setMap(null);
 					$('#winTotal').html(0);
 					$('#drawTotal').html(0);
 					$('#lossTotal').html(0);				
-				}				
+				}
+				$("#gametype").removeClass( "highlight" );
 			  } else if (selectGametype === '1') {
 				filter2();
 				layer1.setOptions({
@@ -417,6 +415,7 @@
 					$('#drawTotal').html(0);
 					$('#lossTotal').html(0);				
 				}
+				$("#gametype").addClass( "highlight" );
 			  } else if (selectGametype === '0') {				  
 				filter2();
 				layer1.setOptions({
@@ -443,6 +442,7 @@
 					$('#drawTotal').html(0);
 					$('#lossTotal').html(0);				
 				}
+				$("#gametype").addClass( "highlight" );
 			  } else {
 				alert('something went wrong');
 			  }			  

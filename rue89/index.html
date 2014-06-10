@@ -35,7 +35,7 @@
 	  
 	  a:visited {
 	    text-decoration:none;
-		color: #666;
+		color: #999;
 	  }
 	  
 	  a:link:hover, a:active, #cfilter:hover {
@@ -255,7 +255,7 @@
 					'click', function() {
 						$('#countries').val(e.row['country'].value);
 						filter();
-						$("#highlight").effect( "pulsate", {times:6, mode:'show'}, 15000 );
+						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
 			});
@@ -270,7 +270,7 @@
 					'click', function() {
 						$('#countries').val(e.row['country'].value);
 						filter();
-						$("#highlight").effect( "pulsate", {times:6, mode:'show'}, 15000 );
+						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
 				
@@ -496,14 +496,6 @@
 			});
 		}
 		
-		
-		$(document).ready(function() {
-			$("#countries").change(function () {
-				$("#highlight").effect( "pulsate", {times:2, mode:'show'}, 5000 );
-				$("#highlight").fadeOut(1250);
-			});
-		});
-		
     </script>
  
   </head>
@@ -668,8 +660,6 @@
 		<div style='margin-top:2px; text-align:right; font-size:8px; font-color:#999; font-style:italic;'><a target="_blank" href='http://fr.wikipedia.org/wiki/Liste_des_matchs_de_l%27%C3%A9quipe_de_France_de_football_par_adversaire'>source</a></div>
 		
 		<div style='margin-top:2px; font-size:8px; color:#999; font-style:italic;'><a target="_blank" href='http://jpfritz.net'>Johannes Neukamm</a> pour Rue89</div>
-		
-	</div>
 		
 	</div>
 	

@@ -24,18 +24,18 @@
 		opacity: 0.85;
 		padding: 5px;
 		margin: 5px;
-		border: 2px solid #999;
+		border: 1px solid #999;
 		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 	  }
 	  
 	  a:link{
 	    text-decoration:none;
-		color: #666;
+		color: #999;
 	  } 
 	  
 	  a:visited {
 	    text-decoration:none;
-		color: #999;
+		color: #666;
 	  }
 	  
 	  a:link:hover, a:active, #cfilter:hover {
@@ -255,7 +255,7 @@
 					'click', function() {
 						$('#countries').val(e.row['country'].value);
 						filter();
-						$("#highlight").effect( "pulsate", {times:6, mode:'show'}, 15000 );
+						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
 			});
@@ -270,7 +270,7 @@
 					'click', function() {
 						$('#countries').val(e.row['country'].value);
 						filter();
-						$("#highlight").effect( "pulsate", {times:6, mode:'show'}, 15000 );
+						$("#highlight").effect( "pulsate", {times:10, mode:'show'}, 25000 );
 						$("#highlight").fadeOut(1250);
 					});
 				
@@ -496,14 +496,6 @@
 			});
 		}
 		
-		
-		$(document).ready(function() {
-			$("#countries").change(function () {
-				$("#highlight").effect( "pulsate", {times:2, mode:'show'}, 5000 );
-				$("#highlight").fadeOut(1250);
-			});
-		});
-		
     </script>
  
   </head>
@@ -653,21 +645,21 @@
 		</div>
 
 		<div style='margin-top:10px; margin-left:12px;'>
-		Contre ce pays,<br>la France a un bilan...<br>
+		Contre ce pays,<br>la France a un bilan:<br>
 		</div>
 		<div style='margin-top:3px' align='center'>
 		<img src='icons/legendealtbar.png'>
 		</div>		
 		<div style='margin-top:5px; margin-left:12px;'>
-		Dont le nombre<br>de matchs est...
+		Nombre de matches:<br>
 		</div>
 		<div style='margin-top:3px' align='center'>
 		<img src='icons/legende2bar.png'>
 		</div>
 		
-		<div style='margin-top:2px; text-align:right; font-size:8px; font-color:#999;'><a target="_blank" href='http://fr.wikipedia.org/wiki/Liste_des_matchs_de_l%27%C3%A9quipe_de_France_de_football_par_adversaire'>source</a></div>
+		<div style='margin-top:2px; text-align:right; font-size:8px; font-color:#999; font-style:italic;'><a target="_blank" href='http://fr.wikipedia.org/wiki/Liste_des_matchs_de_l%27%C3%A9quipe_de_France_de_football_par_adversaire'>source</a></div>
 		
-		<div style='margin-top:2px; font-size:8px; color:#999; font-style:italic;'><a target="_blank" href='http://jpfritz.net'>JOHANNES NEUKAMM</a> pour Rue89</div>
+		<div style='margin-top:2px; font-size:8px; color:#999; font-style:italic;'><a target="_blank" href='http://jpfritz.net'>Johannes Neukamm</a> pour Rue89</div>
 		
 	</div>
 	

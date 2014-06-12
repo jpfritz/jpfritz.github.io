@@ -283,19 +283,18 @@
 					});
 				
 			});			
+			
 		}
 			
 			function filter() {
 			  var whereClause = '';
 			  var whereClause2 = '';
 			  var whereClause3 = '';
-			  var whereClause4 = '';
 			  var selectCountry = document.getElementById('countries').value.replace(/'/g, "\\'");
 			  var selectGametype = document.getElementById('gametype').value.replace(/'/g, "\\'");
 			  var selectResult = document.getElementsByName('game');
 			  var minYear = $( "#slider-range" ).slider( "values", 0 );
 			  var maxYear = $( "#slider-range" ).slider( "values", 1 );
-			  var whereWDL;
 			  var checkboxes = [];
 
 			  function filter2() {

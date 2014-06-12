@@ -55,7 +55,7 @@
 	  
 	  .highlight {
 		background: rgba(0,102,255,0.1);
-	  }	  
+	  }	
     </style>
 
 	<link rel="stylesheet"
@@ -79,55 +79,65 @@
 		<meta name="msapplication-TileColor" content="#FFFFFF">
 		<meta name="msapplication-TileImage" content="icons/favicon-144.png">
 		<meta name="msapplication-config" content="icons/browserconfig.xml">
+		
+    <script type="text/javascript" src="lib/js/markerclusterer.js"></script> 
 	
-    <script type="text/javascript"
-        src="https://maps.google.com/maps/api/js?v=3.exp&language=fr"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3.exp&language=fr"></script>
 		
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 	
-	<!-- future project
-	<script type="text/javascript" src="lib/js/markerclusterer.js"></script> 
-	-->
+	
 	
     <script type="text/javascript">
-	
-
-
-		
 		var map;
-		
-		var table1Id = '116UbzXTb3cPlVYe7pt1US_ctHrgnBQWa62hSQL69';
-		var table2Id = '1JfQHFETzcNQ_ftzZu3TJJHHhuOx861VHg0lbOErX';
-		var table3Id = '1UFUBD1W_VzGdFLWXHjxU4DShBPQKbSFhmvcE42lo';
-
-		var locCountry = 'col29>>1';
-		var locCity = 'col35';			 
-			 
-		var layer1 = new google.maps.FusionTablesLayer({
-			options: {
-				suppressInfoWindows: true
-			}});		
-		var layer2 = new google.maps.FusionTablesLayer({
-			options: {
-				suppressInfoWindows: true
-			}});	 
-		var layer3 = new google.maps.FusionTablesLayer({
-			styleId: 2,
-			templateId: 3
-		});
+		var markers = [];
+		var markerCluster;
+		var query1;
 	
-		function initialize() {
+		var table1Id = '1tUQKFVBVCLN6GBff995OWKMlaHfAbox1HrDGLKtf';
+		var table2Id = '1ez6KBQqWqpS6Rdv2KZiQW0blDqjjyNd7pIGrGeFI';
+		var table3Id = '1vIFhvCZ4r3VNxEdRt8i2eiGdabvna_LiNnoXCgd2';
 		
+		var locCountry = 'col29>>1';
+		var locCity = 'col35';
+		
+		var layer1 = new google.maps.FusionTablesLayer({
+			query: 	{
+				select: locCountry,
+				from: table1Id
+			},
+			options: {
+				styleId: 2,
+				templateId: 3,
+				suppressInfoWindows: true
+			},
+			map: map
+		});		
+		
+		var layer2 = new google.maps.FusionTablesLayer({
+			query: 	{
+				select: locCountry,
+				from: table2Id
+			},
+			options: {
+				styleId: 2,
+				templateId: 3,
+				suppressInfoWindows: true
+			},
+			map: map
+		});
+
+		function initialize() {
 			map = new google.maps.Map(document.getElementById('map-canvas'), {
-			center: new google.maps.LatLng(27.7, 49.5),
-			zoom: 2,
-			streetViewControl: false,
-			mapTypeControl: false
+				center: new google.maps.LatLng(27.7, 49.5),
+				zoom: 2,
+				streetViewControl: false,
+				mapTypeControl: false
 			});
 			
-			var infoWindow = new google.maps.InfoWindow();
+			var infoWindowCountry = new google.maps.InfoWindow();
 			
 			var style = [
 					{
@@ -213,17 +223,10 @@
 				  
 			map.mapTypes.set('map-style', styledMapType);
 			map.setMapTypeId('map-style');
-			
-			layer1.setMap(null);
-			
-			layer2.setMap(null);
-	  
-			layer3.setMap(null);			
-			
+
 			sliderInput();
-			
 			filter();
-			
+			  
 			google.maps.event.addDomListener(document.getElementById('winBox'),
 				'click', function() {
 				  filter();
@@ -251,9 +254,9 @@
 
 			google.maps.event.addListener(layer1, 'click', function(e) {
 				extraContent = '<div style="margin-top:3px;" align="right"><a id="cfilter" style="cursor:pointer; font-style:italic; font-weight:bold; color:#999;">Voir le détail des rencontres</a></div>';
-				infoWindow.setContent('<div class="googft-info-window" style="line-height:1.35;overflow:hidden;white-space:nowrap;">' + e.infoWindowHtml + extraContent + '</div>');
-				infoWindow.setPosition(e.latLng);
-				infoWindow.open(map);
+				infoWindowCountry.setContent('<div class="googft-info-window" style="line-height:1.35;overflow:hidden;white-space:nowrap;">' + e.infoWindowHtml + extraContent + '</div>');
+				infoWindowCountry.setPosition(e.latLng);
+				infoWindowCountry.open(map);
 				
 				google.maps.event.addDomListener(document.getElementById('cfilter'),
 					'click', function() {
@@ -268,9 +271,9 @@
 			
 			google.maps.event.addListener(layer2, 'click', function(e) {				
 				extraContent = '<div style="margin-top:3px;" align="right"><a id="cfilter" style="cursor:pointer; font-style:italic; font-weight:bold; color:#999;">Voir le détail des rencontres</a></div>';
-				infoWindow.setContent('<div class="googft-info-window" style="line-height:1.35;overflow:hidden;white-space:nowrap;">' + e.infoWindowHtml + extraContent + '</div>');
-				infoWindow.setPosition(e.latLng);
-				infoWindow.open(map);
+				infoWindowCountry.setContent('<div class="googft-info-window" style="line-height:1.35;overflow:hidden;white-space:nowrap;">' + e.infoWindowHtml + extraContent + '</div>');
+				infoWindowCountry.setPosition(e.latLng);
+				infoWindowCountry.open(map);
 				
 				google.maps.event.addDomListener(document.getElementById('cfilter'),
 					'click', function() {
@@ -282,20 +285,81 @@
 						$("#highlight").fadeOut(1250);
 					});
 				
-			});			
-		}
+			});
 			
-			function filter() {
+		}
+		
+	    google.maps.event.addDomListener(window, 'load', initialize);
+		
+			
+		function markerSet (encodedQuery) {
+			if (markerCluster) {
+				markers = [];
+				markerCluster.clearMarkers();
+			}
+			
+
+			// Construct the URL
+			var url = ['https://www.googleapis.com/fusiontables/v1/query'];
+			url.push('?sql=' + encodedQuery);
+			url.push('&key=AIzaSyAT76tcYefMoGlGrAgBhFFF22W8JhQyQBI');
+			url.push('&callback=?');
+
+			// Send the JSONP request using jQuery
+			$.ajax({
+			  url: url.join(''),
+			  dataType: 'jsonp',
+			  success: function (data) {
+				var rows = data['rows'];
+				
+				for (var i in rows) {
+					//insert info window code
+					var infoWindowMatch = new google.maps.InfoWindow();
+					
+					var lat = rows[i][0]
+					var lng = rows[i][1]
+					var image = rows[i][2]
+					var title = rows[i][3]
+					var content = rows[i][4]
+					var result = rows[i][5]
+					var kind = rows[i][6]
+					var coordinate = new google.maps.LatLng(lat,lng);
+											
+					var marker = new google.maps.Marker({	'position': coordinate, 
+															'icon': image,
+															'title': 'Match n° '+title,
+														});
+			
+					google.maps.event.addListener(marker, 'mouseover', (function(marker, content) {
+					  return function(){
+					  infoWindowMatch.setContent('<div style="line-height:1.35;overflow:hidden;white-space:nowrap;">' + content + '</div>');
+					  infoWindowMatch.open(map, marker);
+					  }
+					})(marker, content));
+					
+					google.maps.event.addListener(marker, 'mouseout', function() {
+						infoWindowMatch.close();
+					});					
+
+					markers.push(marker);
+
+				}
+
+				markerCluster = new MarkerClusterer(map, markers);
+
+				}
+			  });			  
+		}
+		
+		function filter() {
 			  var whereClause = '';
 			  var whereClause2 = '';
 			  var whereClause3 = '';
-			  var whereClause4 = '';
 			  var selectCountry = document.getElementById('countries').value.replace(/'/g, "\\'");
 			  var selectGametype = document.getElementById('gametype').value.replace(/'/g, "\\'");
 			  var selectResult = document.getElementsByName('game');
 			  var minYear = $( "#slider-range" ).slider( "values", 0 );
 			  var maxYear = $( "#slider-range" ).slider( "values", 1 );
-			  var whereWDL;
 			  var checkboxes = [];
 
 			  function filter2() {
@@ -371,25 +435,50 @@
 				layer2.setOptions({
 				  styleId: 2,
 				  templateId: 3
-				});
+				});				
+
 				if (checkboxes.length && selectCountry != '--Select--') {
-					layer3.setOptions({
-					  query: {
-						select: locCity,
-						from: table3Id,
-						where: whereClause2		  
-					  },
-					  map: map
-					});
+					query1 = "SELECT latitude, longitude, icon, '#', info, 'WDL', 'F(0)/P(1)' FROM " +
+					table3Id + " WHERE " + whereClause2;
+					var encodedQuery = encodeURIComponent(query1);
+
+					markerSet(encodedQuery);					
+					
 					set_totals(whereClause2);
 				} else {
-					layer3.setMap(null);
-					$('#winTotal').html(0);
-					$('#drawTotal').html(0);
-					$('#lossTotal').html(0);				
+					markerSet(); //only to remove markers
+					$('#winTotal').html('');
+					$('#drawTotal').html('');
+					$('#lossTotal').html('');				
 				}
 				$("#gametype").removeClass( "highlight" );
-			  } else if (selectGametype === '1') {
+			  } else if (selectGametype == 2) {
+				filter2();
+				layer1.setOptions({
+				  styleId: 5,
+				  templateId: 6
+			    });	
+				layer2.setOptions({
+				  styleId: 5,
+				  templateId: 6
+			    });
+				if (checkboxes.length && selectCountry != '--Select--') {
+					
+					query1 = "SELECT latitude, longitude, icon, '#', info, 'WDL', 'F(0)/P(1)' FROM " +
+					table3Id + " WHERE " + whereClause3;
+					var encodedQuery = encodeURIComponent(query1);
+
+					markerSet(encodedQuery);
+				
+					set_totals(whereClause3);	
+				} else {
+					markerSet(); //only to remove markers
+					$('#winTotal').html('');
+					$('#drawTotal').html('');
+					$('#lossTotal').html('');			
+				}
+				$("#gametype").addClass( "highlight" );
+			  } else if (selectGametype >= 1) {
 				filter2();
 				layer1.setOptions({
 				  styleId: 3,
@@ -398,25 +487,24 @@
 				layer2.setOptions({
 				  styleId: 3,
 				  templateId: 4
-			    });	
+			    });
 				if (checkboxes.length && selectCountry != '--Select--') {
-					layer3.setOptions({
-					  query: {
-						select: locCity,
-						from: table3Id,
-						where: whereClause3		  
-					  },
-					  map: map
-					});
+					
+					query1 = "SELECT latitude, longitude, icon, '#', info, 'WDL', 'F(0)/P(1)' FROM " +
+					table3Id + " WHERE " + whereClause3;
+					var encodedQuery = encodeURIComponent(query1);
+
+					markerSet(encodedQuery);
+				
 					set_totals(whereClause3);	
 				} else {
-					layer3.setMap(null);
-					$('#winTotal').html(0);
-					$('#drawTotal').html(0);
-					$('#lossTotal').html(0);				
+					markerSet(); //only to remove markers
+					$('#winTotal').html('');
+					$('#drawTotal').html('');
+					$('#lossTotal').html('');			
 				}
 				$("#gametype").addClass( "highlight" );
-			  } else if (selectGametype === '0') {				  
+			  } else if (selectGametype == 0) {
 				filter2();
 				layer1.setOptions({
 				  styleId: 4,
@@ -427,35 +515,34 @@
 				  templateId: 5
 				});		
 				if (checkboxes.length && selectCountry != '--Select--') {
-					layer3.setOptions({
-					  query: {
-						select: locCity,
-						from: table3Id,
-						where: whereClause3		  
-					  },
-					  map: map
-					});
+
+					query1 = "SELECT latitude, longitude, icon, '#', info, 'WDL', 'F(0)/P(1)' FROM " +
+					table3Id + " WHERE " + whereClause3;
+					var encodedQuery = encodeURIComponent(query1);
+
+					markerSet(encodedQuery);
+					
 					set_totals(whereClause3);	
 				} else {
-					layer3.setMap(null);
-					$('#winTotal').html(0);
-					$('#drawTotal').html(0);
-					$('#lossTotal').html(0);				
+					markerSet(); //only to remove markers
+					$('#winTotal').html('');
+					$('#drawTotal').html('');
+					$('#lossTotal').html('');				
 				}
 				$("#gametype").addClass( "highlight" );
 			  } else {
 				alert('something went wrong');
 			  }			  
-			}
+		}
 			
 		function set_totals(filter_clause) {
 			var win_total;
 			var draw_total;
 			var loss_total;
 		
-			var query = "SELECT SUM('W'), SUM('D'), SUM('L') FROM " +
+			var query2 = "SELECT SUM('W'), SUM('D'), SUM('L') FROM " +
             table3Id + " WHERE " + filter_clause;
-			var encodedQuery = encodeURIComponent(query);
+			var encodedQuery = encodeURIComponent(query2);
 
 			var url = ['https://www.googleapis.com/fusiontables/v1/query'];
 			url.push('?sql=' + encodedQuery);
@@ -466,14 +553,14 @@
 			  url: url.join(''),
 			  dataType: 'jsonp',
 			  success: function (data) {
-				if (data['rows']) {			  
+				if (data['rows']) {
 				   win_total = data['rows'][0][0];
 				   draw_total = data['rows'][0][1];
 				   loss_total = data['rows'][0][2];
 			    } else {
-				   win_total = 0;
-				   draw_total = 0;
-				   loss_total = 0;				
+				   win_total = '';
+				   draw_total = '';
+				   loss_total = '';				
 				}
 			  
 			   $('#winTotal').html(win_total);
@@ -483,10 +570,6 @@
 			  }
 			});
 		}
- 
-		google.maps.event.addDomListener(window, 'load', initialize);
-		
-		
 		
 		function sliderInput() {
 		
@@ -516,11 +599,11 @@
   <body>
 	<div id="map-canvas"></div>
 	
-	<div id="highlight" style="position: absolute; right: 16px; top: 13px;"></div>
+	<div id="highlight" style="position: absolute; right: 18px; top: 13px;"></div>
 	
 	<div class="legend" style="position: absolute; right: 5px; top: 5px;">
 		<label>
-			<select id="countries" onchange="filter(this.value);" style="border:1; border-color:#ccc; font-family: Arial, sans-serif; font-size: 12px;">
+			<select id="countries" style="border:1; border-color:#ccc; font-family: Arial, sans-serif; font-size: 12px;">
 				<option value='--Select--'>Choisir un adversaire</option>
 				<option value='Grand Total'>- TOUS</option>
 				<option value='South Africa'>Afrique du Sud</option>
@@ -614,9 +697,10 @@
 		
 		<div style="margin-top:5px; margin-left:7px;">
 			<label>
-				<select id="gametype" onchange="filter(this.value);" style="border:0; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:125px;">
+				<select id="gametype" style="border:0; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:130px;">
 				  <option value="--Select--">Tous les matches</option>
 				  <option value="1">Compétitions</option>
+				  <option value="2">- Coupe du monde</option>
 				  <option value="0">Amicaux</option>
 				</select>
 			</label> 		
@@ -654,7 +738,11 @@
 					<td width='26px' align='right'><div id="lossTotal"></div></td>
 					<td width='15px'><input id="lossBox" type="checkbox" checked="checked" 
 					  value="L" name="game"></td>
-				</tr>		
+				</tr>	
+				<tr>
+					<td align='center' width='15px'><img src='icons/bw_star.png'></td>
+					<td colspan="3">COUPE DU MONDE</td>
+				</tr>	
 			</table>
 		</div>
 
@@ -662,7 +750,7 @@
 		Contre ce pays,<br>la France a un bilan:<br>
 		</div>
 		<div style='margin-top:3px' align='center'>
-		<img src='icons/legendebar.png'>
+		<img src='icons/legendealtbar.png'>
 		</div>		
 		<div style='margin-top:5px; margin-left:12px;'>
 		Nombre de matches:<br>

@@ -96,8 +96,8 @@
 		var markerCluster;
 		var query1;
 	
-		var table1Id = '1tUQKFVBVCLN6GBff995OWKMlaHfAbox1HrDGLKtf';
-		var table2Id = '1ez6KBQqWqpS6Rdv2KZiQW0blDqjjyNd7pIGrGeFI';
+		var table1Id = '1Rq7T83qFUaO5s7_mC0Z6gZt2OZECNb1S2Qd771eU';
+		var table2Id = '1M1JYW4NhvHmjgqNPmlwQz3F92bx9Lu2-EkmppgO2';
 		var table3Id = '1vIFhvCZ4r3VNxEdRt8i2eiGdabvna_LiNnoXCgd2';
 		
 		var locCountry = 'col29>>1';
@@ -355,6 +355,7 @@
 			  var whereClause = '';
 			  var whereClause2 = '';
 			  var whereClause3 = '';
+			  var whereClause4 = '';
 			  var selectCountry = document.getElementById('countries').value.replace(/'/g, "\\'");
 			  var selectGametype = document.getElementById('gametype').value.replace(/'/g, "\\'");
 			  var selectResult = document.getElementsByName('game');
@@ -376,24 +377,29 @@
 				  }				  
 			    }
 				
-			    if (selectCountry === '--Select--') {
+			    if (selectCountry == '--Select--') {
 				  $("#countries").removeClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'WDL' IN (" +
-				    checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";				
-				} else if (selectCountry === 'Grand Total') {
+				    checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
+				  whereClause4 = "'F(0)/P(1)' IN ('1', '2') AND 'WDL' IN (" +
+				    checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
+				} else if (selectCountry == 'Grand Total') {
 				  $("#countries").addClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'WDL' IN (" +
 					checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
-				} else if (selectCountry === 'GermanyTotal') {
+				  whereClause4 = "'F(0)/P(1)' IN ('1', '2') AND 'WDL' IN (" +
+					checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
+				} else if (selectCountry == 'GermanyTotal') {
 				  $("#countries").addClass( "highlight" );
 				  generateCheckboxes();
 				  whereClause = "'country' IN ('" + selectCountry + "')";
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'country' IN ('Germany', 'West Germany', 'German Reich', 'Weimar Republic') AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'country' IN ('Germany', 'West Germany', 'Germany Reich', 'Weimar Republic') AND 'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
+				  whereClause4 = "'F(0)/P(1)' IN ('1', '2') AND 'country' IN ('Germany', 'West Germany', 'Germany Reich', 'Weimar Republic') AND 'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				} else {				
 				  $("#countries").addClass( "highlight" );
 				  generateCheckboxes();
@@ -401,6 +407,8 @@
 				  whereClause2 = "'WDL' IN (" + checkboxes.join(',') + ") AND 'country' IN ('" +
 					selectCountry + "') AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				  whereClause3 = "'F(0)/P(1)' = '" + selectGametype + "' AND 'country' IN ('" +
+					selectCountry + "') AND 'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
+				  whereClause4 = "'F(0)/P(1)' IN ('1', '2') AND 'country' IN ('" +
 					selectCountry + "') AND 'WDL' IN (" + checkboxes.join(',') + ") AND 'yyyy' <= '" + maxYear + "' AND 'yyyy' >= '" + minYear + "'";
 				}
 				
@@ -426,7 +434,7 @@
 				return(checkboxes);
 			  }
 
-			  if (selectGametype === '--Select--') {
+			  if (selectGametype == '--Select--') {
 				filter2();
 				layer1.setOptions({
 				  styleId: 2,
@@ -478,7 +486,7 @@
 					$('#lossTotal').html('');			
 				}
 				$("#gametype").addClass( "highlight" );
-			  } else if (selectGametype >= 1) {
+			  } else if (selectGametype == 1) {
 				filter2();
 				layer1.setOptions({
 				  styleId: 3,
@@ -491,12 +499,12 @@
 				if (checkboxes.length && selectCountry != '--Select--') {
 					
 					query1 = "SELECT latitude, longitude, icon, '#', info, 'WDL', 'F(0)/P(1)' FROM " +
-					table3Id + " WHERE " + whereClause3;
+					table3Id + " WHERE " + whereClause4;
 					var encodedQuery = encodeURIComponent(query1);
 
 					markerSet(encodedQuery);
 				
-					set_totals(whereClause3);	
+					set_totals(whereClause4);	
 				} else {
 					markerSet(); //only to remove markers
 					$('#winTotal').html('');

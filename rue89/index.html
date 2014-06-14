@@ -107,7 +107,7 @@
 		var query1;
 	
 		var table1Id = '1Rq7T83qFUaO5s7_mC0Z6gZt2OZECNb1S2Qd771eU';
-		var table2Id = '1BRbLdKeTK8dCdiBkBs5D8_n27_VXSHc02stoo3ON';
+		var table2Id = '1mwEouabVCS5SzhcQeNF8u6Ss0_ovxv6S5Bxq2PaS';
 		var table3Id = '1vIFhvCZ4r3VNxEdRt8i2eiGdabvna_LiNnoXCgd2';
 		
 		var locCountry = 'col29>>1';
@@ -310,7 +310,7 @@
 				$("#countries").val('--Select--');
 				$("#gametype").val('--Select--');
 				$("#yearMin").val('1904');
-				$("#yearMax").val('2015');
+				$("#yearMax").val('2014');
 				sliderInput();
 				filter();
 			});
@@ -631,7 +631,7 @@
 				$( "#slider-range" ).slider({
 				  range: true,
 				  min: 1904,
-				  max: 2015,
+				  max: 2014,
 				  values: [ minYear, maxYear ],
 				  slide: function( event, ui ) {
 					$( "#yearMin" ).val( ui.values[ 0 ] );
@@ -687,6 +687,7 @@
 				<option value='Cameroon'>Cameroun</option>
 				<option value='Canada'>Canada</option>
 				<option value='Chile'>Chili</option>
+				<option value='China'>Chine</option>
 				<option value='Cyprus'>Chypre</option>
 				<option value='Colombia'>Colombie</option>
 				<option value='South Korea'>Corée du Sud</option>
@@ -746,7 +747,6 @@
 				<option value='Turkey'>Turquie</option>
 				<option value='Ukraine'>Ukraine</option>
 				<option value='Uruguay'>Uruguay</option>
-				<option value='Vietnam'>Viêt Nam</option>
 			</select>
 		</label><br>
 		
@@ -765,7 +765,7 @@
 			de
 			<input type="text" id="yearMin" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="1904" onchange="sliderInput(this.value)">
 			à
-			<input type="text" id="yearMax" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="2015" onchange="sliderInput(this.value)">
+			<input type="text" id="yearMax" style="border:0; color:#666666; font-weight:bold; font-family: Arial, sans-serif; font-size: 12px; width:33px; margin-left:2px;" value="2014" onchange="sliderInput(this.value)">
 		</div>
 		<div>
 			<div id="slider-range" style="margin-left:7px; margin-top:8px; width:151px;"></div>
@@ -782,14 +782,14 @@
 				</tr>
 				<tr>
 					<td align='center' width='15px'><img src='icons/yellow_dot.png'></td>
-					<td width="90px">MATCHES NUL</td>
+					<td width="90px">MATCHES NULS</td>
 					<td width='26px' align='right'><div id="drawTotal"></div></td>
 					<td width='15px'><input id="drawBox" type="checkbox" checked="checked" 
 					  value="D" name="game"></td>
 				</tr>
 				<tr>
 					<td align='center' width='15px'><img src='icons/red_dot.png'></td>
-					<td width="90px">DÉFAITES</td>
+					<td width="90px">DEFAITES</td>
 					<td width='26px' align='right'><div id="lossTotal"></div></td>
 					<td width='15px'><input id="lossBox" type="checkbox" checked="checked" 
 					  value="L" name="game"></td>

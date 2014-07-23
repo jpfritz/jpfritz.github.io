@@ -143,6 +143,8 @@
 			map = new google.maps.Map(document.getElementById('map-canvas'), {
 				center: new google.maps.LatLng(27.7, 49.5),
 				zoom: 2,
+				maxZoom: 19,
+				minZoom: 2,
 				streetViewControl: false,
 				mapTypeControl: false
 			});

@@ -17,8 +17,24 @@
         <td>{{article.id}}</td>
 		<td>{{article.name}}</td>
 		<td>{{article.price}}</td>
+		<td><a href class="btn btn-default btn-sm" ng-click="cart.addArticle(article);">Hinzufügen</a></td>
       </tr>
     </table>
+	
+	<div ng-controller="CartCtrl">
+	  <div ng-hide="cart.getItems().length" class="alert alert-warning">Ihr Warenkorb ist noch leer.</div>
+	  <table ng-show="cart.getItems().length" class="table">
+		<tr ng-repeat="item in cart.getItems() track by $index">
+		  <td>{{item.name}}</td>
+		  <td>{{item.price | currency}}</td>
+		</tr>
+		<tr>
+		  <td>{{cart.getItems().length}} Artikel</td>
+		  <td>{{cart.sum() | currency}}</td>
+		  <td></td>
+		</tr>
+	  </table>
+	</div>
 
   </div>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>

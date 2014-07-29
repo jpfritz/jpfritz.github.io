@@ -12,9 +12,11 @@
       <p ng-show="search">Du suchst gerade nach: {{search}}</p>
     </form>
 
-    <table class="table">
+    <table class="table" ng-controller="ArticlesCtrl">
       <tr ng-repeat="article in articles | filter:search">
-        <td>{{article}}</td>
+        <td>{{article.id}}</td>
+		<td>{{article.name}}</td>
+		<td>{{article.price}}</td>
       </tr>
     </table>
 

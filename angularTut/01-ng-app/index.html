@@ -4,7 +4,13 @@
   <title>AngularJS Tutorial</title>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
-<body>
+<body ng-init="articles = ['Pizza Margherita', 'Pizza Tonno']">
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js"></script>
+  <input type="text" ng-model="search">
+  <table class="table">
+  <tr ng-repeat="article in articles | filter:search">
+    <td>{{article}}</td>
+  </tr>
+</table>
 </body>
 </html>

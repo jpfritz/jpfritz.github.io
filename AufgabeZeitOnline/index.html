@@ -59,6 +59,8 @@
 	
 	$("#submit").click(function() {
 	
+		if ($("#avatar").val().length && $("#plz").val().length && $("#email").val().length) {
+	
 		Parse.initialize("OIV8dGzyXgPJdrMB4QN6ADFcNgt77iU8k3SDrQHi", "iIhlFGCPDKgy2DqDjBwZnCv5bFRHdcIshf5dbcjW");
 		
 		var UserProfile = Parse.Object.extend("UserProfile");
@@ -85,7 +87,10 @@
 		$("#plz").val("");		
 		$("#email").val("");
 		
+		}
+		
 	});
+	
 	
 	
   </script>

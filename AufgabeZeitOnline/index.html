@@ -1,0 +1,91 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Aufgabe JN</title>
+  <meta name="description" content="Aufgabe JN">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">  
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+  <script type="text/javascript" src="js/jquery.numeric.js"></script>
+</head>
+
+<body>
+  
+  <div id="main">
+    <h1>Bitte Ausfüllen:</h1>			
+		<p>Name:<br><input type="text" id="avatar"></p>
+		<p>Postleitzahl:<br><input type="text" id="plz"></p>
+		<p>E-Mail Adresse:<br><input type="text" id="email"></p><br>
+		<input type="submit" id="submit" value="Abschicken">
+  </div>
+
+  <script type="text/javascript">
+  
+	$(document).ready(function(){
+	
+		$("#avatar").blur(function(){
+			if ($(this).val()) {
+			} else {
+				alert("Bitte geben Sie einen Namen ein.");
+			}
+		});
+			
+		$("#plz").numeric();
+		$("#plz").attr('maxlength', '5');
+		
+		$("#plz").blur(function(){
+			if ($(this).val().length == 5) {
+			} else {
+				alert("Bitte geben Sie eine gültige Postleitzahl ein.");
+			}
+		});		
+	
+		$("#email").blur(function() {
+			var realEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+			
+			if (realEmail.test(this.value)) {
+			} else {
+				alert("Bitte geben Sie eine gültige E-Mail Adresse ein.");
+			}
+		});		
+		
+	});  
+
+	
+	$("#submit").click(function() {
+	
+		Parse.initialize("OIV8dGzyXgPJdrMB4QN6ADFcNgt77iU8k3SDrQHi", "iIhlFGCPDKgy2DqDjBwZnCv5bFRHdcIshf5dbcjW");
+		
+		var UserProfile = Parse.Object.extend("UserProfile");
+		var userProfile = new UserProfile();
+
+		var avatar = $("#avatar").val();
+		var plz = $("#plz").val();
+		var emailAddress = $("#email").val();	
+	
+		userProfile.set("Name", avatar);
+		userProfile.set("PLZ", plz);
+		userProfile.set("eMail", emailAddress);
+
+		userProfile.save(null, {
+		  success: function(userProfile) {
+			alert("Daten übermittelt.");
+		  },
+		  error: function(userProfile, error) {
+			alert("Da ist etwas schief gelaufen. Bitte versuchen Sie es erneut.");
+		  }
+		});
+		
+	});
+	
+	
+  </script>
+  
+</body>
+
+</html>

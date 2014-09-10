@@ -6,6 +6,147 @@
   <link rel="stylesheet" href="legend.css?v=1.0">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
+	<style>
+		body {
+			background-color: red;
+		}
+		.overlay {
+			display: none;
+			position: fixed;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: black;
+			z-index:1001;
+			-moz-opacity: 0.6;
+			opacity:.60;
+			filter: alpha(opacity=60);
+		}
+		.lightbox {
+		    display: none;
+			background-color: #fff;
+			width: 540px;
+			height: 180px;
+			position: absolute;
+			top: 35%;
+			left: 30%;
+			z-index:1002;
+		}
+		.lightbox-inner {
+		    display: none;
+			position: relative;
+			width: 70%;
+			height: 60%;
+			margin-left: 15%;
+			margin-top: 9%;
+			font: bold 24px arial, sans-serif;
+		}
+		
+		.abbrechen-button {
+		  display: none;
+		  -webkit-border-radius: 2px;
+		  -moz-border-radius: 2px;
+		  border-radius: 2px;
+		  border: 1px solid #d9d9d9;
+		  display: inline-block;
+		  text-align: center;
+		  text-decoration: none;
+		  letter-spacing: 0.03em;
+		  padding: 2px 15px 3px 15px;
+		  font-family: Arial, Helvetica, FreeSans, sans-serif;
+		  font-size: 13px;
+		  font-weight: 700;
+		  width: auto;
+		  height: 32px;
+		  color: #999;
+		  background-color: #fff;
+		  background-image: deprecated-webkit-gradient(linear, left top, left bottom, #fff, #fafafa);
+		  background-image: -webkit-linear-gradient(top, #fff, #fafafa);
+		  background-image: -moz-linear-gradient(top, #fff, #fafafa);
+		  background-image: -ms-linear-gradient(top, #fff, #fafafa);
+		  background-image: -o-linear-gradient(top, #fff, #fafafa);
+		  background-image: linear-gradient(top, #fff, #fafafa);
+		  margin-top: 30px;
+		  float: right;		  
+		}
+
+		.abbrechen-button:hover {
+		  border: 1px solid #ccc;
+		  background-image: deprecated-webkit-gradient(linear, left top, left bottom, #b52000, #990000);
+		  background-image: -webkit-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: -moz-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: -ms-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: -o-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: linear-gradient(top, #fff, #f3f3f3);
+		  cursor: pointer;
+		}
+
+		.abbrechen-button:active {
+		  border: 1px solid #ccc;
+		  -webkit-box-shadow: inset 0 0 5px 2px #ececec;
+		  -moz-box-shadow: inset 0 0 5px 2px #ececec;
+		  box-shadow: inset 0 0 5px 2px #ececec;
+		}
+		
+		.reload-button {
+		  display: none;
+		  -webkit-border-radius: 2px;
+		  -moz-border-radius: 2px;
+		  border-radius: 2px;
+		  border: 1px solid #d9d9d9;
+		  display: inline-block;
+		  text-align: center;
+		  text-decoration: none;
+		  letter-spacing: 0.03em;
+		  padding: 2px 15px 3px 15px;
+		  font-family: Arial, Helvetica, FreeSans, sans-serif;
+		  font-size: 13px;
+		  font-weight: 700;
+		  width: auto;
+		  height: 32px;
+		  color: #990000;
+		  background-color: #fff;
+		  background-image: deprecated-webkit-gradient(linear, left top, left bottom, #fff, #fafafa);
+		  background-image: -webkit-linear-gradient(top, #fff, #fafafa);
+		  background-image: -moz-linear-gradient(top, #fff, #fafafa);
+		  background-image: -ms-linear-gradient(top, #fff, #fafafa);
+		  background-image: -o-linear-gradient(top, #fff, #fafafa);
+		  background-image: linear-gradient(top, #fff, #fafafa);
+		  margin-top: 30px;
+		  float: left;
+		}
+		
+		.reload-image {
+		  margin-left: 10px;
+		  margin-top: 3px;
+		  float: right;
+		}
+		
+		.reload-text {
+		  margin-top: 4px;
+		  float: left;
+		} 		
+
+		.reload-button:hover {
+		  border: 1px solid #ccc;
+		  background-image: deprecated-webkit-gradient(linear, left top, left bottom, #b52000, #990000);
+		  background-image: -webkit-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: -moz-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: -ms-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: -o-linear-gradient(top, #fff, #f3f3f3);
+		  background-image: linear-gradient(top, #fff, #f3f3f3);
+		  cursor: pointer;
+		}
+
+		.reload-button:active {
+		  border: 1px solid #ccc;
+		  -webkit-box-shadow: inset 0 0 5px 2px #ececec;
+		  -moz-box-shadow: inset 0 0 5px 2px #ececec;
+		  box-shadow: inset 0 0 5px 2px #ececec;
+		}	
+		
+	</style>
   
   <script type="text/javascript">
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
